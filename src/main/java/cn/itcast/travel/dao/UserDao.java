@@ -16,4 +16,7 @@ public interface UserDao {
      */
     public void save(User user);
 
+    public User findByCode(String code);
+    public void updateStatus(User user);
+
  }
