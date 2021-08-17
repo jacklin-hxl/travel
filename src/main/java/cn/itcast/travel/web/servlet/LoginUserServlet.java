@@ -11,11 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @WebServlet("/loginUserServlet")
-public class loginUserServlet extends HttpServlet {
+public class LoginUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         Map<String, String[]> map = request.getParameterMap();
         User user = new User();
@@ -47,6 +48,13 @@ public class loginUserServlet extends HttpServlet {
         }
 
         ObjectMapper mapper = new ObjectMapper();
+        response.setContentType("application/json;charset=utf-8");
+
+        try {
+            mapper.writeValue(response.getOutputStream(),info);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
