@@ -1,3 +1,4 @@
 .idea
 target/
-src/main/webapp
+src/main/webapp/img
+src/main/webapp/fonts
