@@ -64,7 +64,7 @@
 			$(function () {
 				$("#registerForm").submit(function(){
 					if(checkUsername() && checkPassword() && checkEmail()){
-						$.post("registUserServlet",$(this).serialize(),function(data){
+						$.post("./user/regist",$(this).serialize(),function(data){
 							//data {flag:true,errorMsg:"注册失败"}
 
 							if(data.flag){
