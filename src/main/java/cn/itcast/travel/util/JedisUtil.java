@@ -31,7 +31,13 @@ public final class JedisUtil {
         config.setMaxIdle(Integer.parseInt(pro.getProperty("maxIdle")));
 
         //初始化JedisPool
-        jedisPool = new JedisPool(config, pro.getProperty("host"), Integer.parseInt(pro.getProperty("port")));
+//        jedisPool = new JedisPool(config, pro.getProperty("host"), Integer.parseInt(pro.getProperty("port")));
+        jedisPool = new JedisPool(
+                config,
+                pro.getProperty("host"),
+                Integer.parseInt(pro.getProperty("port")),
+                2000,
+                pro.getProperty("password"));
 
 
     }
@@ -51,5 +57,12 @@ public final class JedisUtil {
         if (jedis != null) {
             jedis.close();
         }
+    }
+
+    public static void main(String[] args) { // for test
+        Jedis jedis = JedisUtil.getJedis();
+        jedis.set("test","123456");
+
+
     }
 }
