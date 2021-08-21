@@ -4,7 +4,6 @@ import cn.itcast.travel.domain.ResultInfo;
 import cn.itcast.travel.domain.User;
 import cn.itcast.travel.service.UserService;
 import cn.itcast.travel.service.impl.UserServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -24,9 +23,7 @@ public class UserServlet extends BaseServlet{
 
         //将info对象序列化json
         ResultInfo info = new ResultInfo();
-        ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");
-        String json = null;
 
         //获取验证码
         String check = request.getParameter("check");
@@ -41,18 +38,7 @@ public class UserServlet extends BaseServlet{
             info.setFlag(false);
             info.setErrorMsg("验证码错误");
 
-            try {
-                json = mapper.writeValueAsString(info);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                assert json != null;
-                response.getWriter().write(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            writeValueToString(info, response);
 
             return;
         }
@@ -83,18 +69,8 @@ public class UserServlet extends BaseServlet{
             info.setErrorMsg("注册失败!");
         }
 
-        try {
-            json = mapper.writeValueAsString(info);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        writeValueToString(info, response);
 
-        try {
-            //将json数据写回客户端
-            response.getWriter().write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -140,12 +116,8 @@ public class UserServlet extends BaseServlet{
             }
 
             response.setContentType("text/html;charset=utf-8");
+            writeValue(msg, response);
 
-            try {
-                response.getWriter().write(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -180,14 +152,8 @@ public class UserServlet extends BaseServlet{
             request.getSession().setAttribute("user",u);
         }
 
-        ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");
-
-        try {
-            mapper.writeValue(response.getOutputStream(),info);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeValue(info, response);
 
 
     }

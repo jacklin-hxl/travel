@@ -33,9 +33,13 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
         String content;
         content = String.format(
-                "<a href='http://localhost/travel/activeUserServlet?code=%s' >点击激活</a>",
+                "<a href='http://localhost/travel/user/active?code=%s' >点击激活</a>",
                 user.getCode());
+//        long st = System.currentTimeMillis();
+        // FIXME: 2021/8/21 堵塞操作，耗时4s，需要通过异步方式
         MailUtils.sendMail(user.getEmail(),content,"激活邮件");
+//        long dt = System.currentTimeMillis();
+//        System.out.println("程序运行时间2: "+ (dt - st) + "ms");
         return true;
     }
 

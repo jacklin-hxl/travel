@@ -66,6 +66,7 @@
 					if(checkUsername() && checkPassword() && checkEmail()){
 						$.post("./user/regist",$(this).serialize(),function(data){
 							//data {flag:true,errorMsg:"注册失败"}
+							// var dataJson = JSON.parse(data);
 
 							if(data.flag){
 								//注册成功，跳转成功页面
