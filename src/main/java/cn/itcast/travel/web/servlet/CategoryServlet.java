@@ -18,6 +18,8 @@ public class CategoryServlet extends BaseServlet{
     public void findAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 查询数据
         List<Category> cs = categoryService.findAll();
+        resp.setContentType("application/json;charset=utf-8");
+        writeValue(cs,resp);
     }
 
 }
