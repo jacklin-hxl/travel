@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 
     public User findByUsernameAndPassword(User user) {
         User u = null;
-        String sql = "select * from tab_user where username=? and password=?";
+        String sql = "select name,status from tab_user where username=? and password=?";
         try {
             u = template.queryForObject(
                     sql,

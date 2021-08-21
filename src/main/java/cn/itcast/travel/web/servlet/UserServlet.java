@@ -100,6 +100,7 @@ public class UserServlet extends BaseServlet{
 
     public void find(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         //从session中获取登录用户
+        HttpSession session = request.getSession();
         Object user = request.getSession().getAttribute("user");
 
         ObjectMapper mapper = new ObjectMapper();
@@ -176,6 +177,7 @@ public class UserServlet extends BaseServlet{
 
         if (u != null && "Y".equals(u.getStatus())){
             info.setFlag(true);
+            request.getSession().setAttribute("user",u);
         }
 
         ObjectMapper mapper = new ObjectMapper();
