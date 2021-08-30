@@ -10,12 +10,13 @@ import java.io.IOException;
 public class RouteServlet extends BaseServlet {
 
     protected void pageQuery(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // get parameter
         String currentPageStr = req.getParameter("currentPage");
         String pageSizeStr = req.getParameter("pageSize");
         String cidStr = req.getParameter("cid");
 
-        int cid = 0;//类别id
         //处理参数
+        int cid = 0;//类别id
         if (cidStr != null && cidStr.length() > 0){
             cid = Integer.parseInt(cidStr);
         }
@@ -29,5 +30,10 @@ public class RouteServlet extends BaseServlet {
         if (pageSizeStr != null && pageSizeStr.length() > 0){
             pageSize = Integer.parseInt(pageSizeStr);
         }
+
+        //调用service查询pagebean对象
+
+
+
     }
 }
