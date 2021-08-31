@@ -23,7 +23,7 @@ public class RouteServiceImpl implements RouteService {
 
         //get totalCount 总数据量 by cid && set
         int totalCount = routeDao.findTotalCount(cid);
-        pageBean.setTotalPage(totalCount);
+        pageBean.setTotalCount(totalCount);
 
         //set totalPage 总页数
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : (totalCount / pageSize) + 1;
