@@ -79,14 +79,8 @@ public class UserServlet extends BaseServlet{
         HttpSession session = request.getSession();
         Object user = request.getSession().getAttribute("user");
 
-        ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=utf-8");
-
-        try {
-            mapper.writeValue(response.getOutputStream(),user);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeValue(user,response);
     }
 
     public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException {

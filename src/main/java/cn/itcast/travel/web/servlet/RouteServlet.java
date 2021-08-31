@@ -1,5 +1,8 @@
 package cn.itcast.travel.web.servlet;
 
+import cn.itcast.travel.domain.PageBean;
+import cn.itcast.travel.domain.Route;
+import cn.itcast.travel.service.impl.RouteServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +12,9 @@ import java.io.IOException;
 @WebServlet("/route/*")
 public class RouteServlet extends BaseServlet {
 
-    protected void pageQuery(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private RouteServiceImpl routeService = new RouteServiceImpl();
+
+    public void pageQuery(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get parameter
         String currentPageStr = req.getParameter("currentPage");
         String pageSizeStr = req.getParameter("pageSize");
@@ -32,8 +37,10 @@ public class RouteServlet extends BaseServlet {
         }
 
         //调用service查询pagebean对象
+        PageBean<Route> pageBean = routeService.pageQuery(cid, currentPage, pageSize);
 
-
+        resp.setContentType("application/json;charset=utf-8");
+        writeValue(pageBean, resp);
 
     }
 }
