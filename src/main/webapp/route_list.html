@@ -26,12 +26,12 @@
                 $('#totalCount').html(pb.totalCount);
                 var lis = "";
                 var firstPage = '<li onclick="javascript:load('+ cid + ')"><a href="javascript:void(0)">首页</a></li>';
-                var beforeNum = i - 1;
-                if (beforeNum == 0){
+                var beforeNum = pb.currentPage - 1;
+                if (beforeNum <= 0){
                     beforeNum = 1;
                 }
-                var nextNum = i + 1;
-                if (nextNum == pb.totalPage){
+                var nextNum = pb.currentPage + 1;
+                if (nextNum >= pb.totalPage){
                     nextNum = pb.totalPage
                 }
 
