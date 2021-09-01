@@ -17,20 +17,39 @@
             var search = location.search;
             //alert(search);
             var cid = search.split("=")[1];
+            load(cid)
+        });
 
-            $.get("route/pageQuery", {cid:cid}, function(pb){
+        function load(cid,currentPage=1) {
+            $.get("route/pageQuery", {cid:cid,currentPage:currentPage}, function(pb){
                 $('#totalPage').html(pb.totalPage);
                 $('#totalCount').html(pb.totalCount);
                 var lis = "";
-                var firstPage = '<li><a href="">首页</a></li>';
-                var beforePage = '<li class="threeword"><a href="#">上一页</a></li>';
-                var nextPage = '<li class="threeword"><a href="javascript:;">下一页</a></li>';
-                var lastPage = '<li class="threeword"><a href="javascript:;">末页</a></li>';
+                var firstPage = '<li onclick="javascript:load('+ cid + ')"><a href="javascript:void(0)">首页</a></li>';
+                var beforeNum = i - 1;
+                if (beforeNum == 0){
+                    beforeNum = 1;
+                }
+                var nextNum = i + 1;
+                if (nextNum == pb.totalPage){
+                    nextNum = pb.totalPage
+                }
+
+                var beforePage = '<li class="threeword" onclick="javascript:load(' + cid + ',' + beforeNum +')"><a href="javascript:void(0)">上一页</a></li>';
+                var nextPage = '<li class="threeword" onclick="javascript:load(' + cid + ',' + nextNum +')"><a href="javascript:void(0)">下一页</a></li>';
+                var lastPage = '<li class="threeword" onclick="javascript:load(' + cid + ',' + pb.totalPage +')"><a href="javascript:void(0)">末页</a></li>';
 
                 lis += firstPage;
                 lis += beforePage;
+                var li;
                 for (var i = 1; i <= pb.totalPage; i ++) {
-                    var li = '<li><a href="#">' + i + '</a></li>';
+
+                    if (i == pb.currentPage) {
+                        li = '<li class="curPage" onclick="javascript:load(' + cid +',' + i + ')"><a href="javascript:void(0)">' + i + '</a></li>';
+                    }else{
+                        li = '<li onclick="javascript:load(' + cid +',' + i + ')"><a href="javascript:void(0)">' + i + '</a></li>';
+                    }
+
                     lis += li;
                 };
                 lis += nextPage;
@@ -49,8 +68,7 @@
                 $("#route").html(route_lis);
 
             });
-
-        });
+        }
 
     </script>
 </head>
