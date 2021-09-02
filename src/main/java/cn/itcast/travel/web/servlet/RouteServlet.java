@@ -16,10 +16,16 @@ public class RouteServlet extends BaseServlet {
 
     public void pageQuery(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // get parameter
+//        req.setCharacterEncoding("utf-8");
         String currentPageStr = req.getParameter("currentPage");
         String pageSizeStr = req.getParameter("pageSize");
         String cidStr = req.getParameter("cid");
         String rname = req.getParameter("rname");
+        if (rname != null && rname.length() > 0 ) {
+            rname = new String(rname.getBytes("iso-8859-1"), "utf-8");
+        }
+
+
 
         //处理参数
         int cid = 0;//类别id

@@ -21,11 +21,11 @@ public class RouteDaoImpl implements RouteDao {
 
         List params = new ArrayList(); //条件们
         if (cid != 0){
-            sb.append("and cid = ?");
+            sb.append("and cid = ? ");
             params.add(cid);
         }
         if(rname != null && rname.length() > 0){
-            sb.append("and rname like ?");
+            sb.append("and rname like ? ");
             params.add("%" + rname + "%");
         }
         sql = sb.toString();
@@ -41,19 +41,20 @@ public class RouteDaoImpl implements RouteDao {
 
         List params = new ArrayList(); //条件们
         if (cid != 0){
-            sb.append("and cid = ?");
+            sb.append("and cid = ? ");
             params.add(cid);
         }
         if(rname != null && rname.length() > 0){
-            sb.append("and rname like ?");
+            sb.append("and rname like ? ");
             params.add("%" + rname + "%");
         }
-        sb.append(" limit ?,?");
+        sb.append("limit ?,? ");
         params.add(start);
         params.add(pageSize);
 
         sql = sb.toString();
         System.out.println(sql);
+        System.out.println(params.toString());
 
         return template.query(sql,new BeanPropertyRowMapper<Route>(Route.class),params.toArray());
     }

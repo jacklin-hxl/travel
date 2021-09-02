@@ -22,17 +22,18 @@
 
         $("#search-button").click(function () {
             var rname = $("#search_input").val();
+            //if (rname != null && rname.length > 0){
+            //    rname = window.decodeURIComponent(rname);
+            //}
             var cid = getParameter("cid");
             location.href='route_list.html?cid=' + cid + '&rname=' + rname;
-            alert(cid);
-            alert(rname);
         });
 
     });
 </script>
 
     <header id="header">
-        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <div class="top_banner">
             <img src="images/top_banner.jpg" alt="">
         </div>
