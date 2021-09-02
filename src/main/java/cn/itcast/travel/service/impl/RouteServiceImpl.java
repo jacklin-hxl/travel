@@ -13,7 +13,7 @@ public class RouteServiceImpl implements RouteService {
     private RouteDao routeDao = new RouteDaoImpl();
 
     @Override
-    public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize) {
+    public PageBean<Route> pageQuery(int cid, int currentPage, int pageSize,String rname) {
         //封装pageBean
         PageBean<Route> pageBean = new PageBean<>();
         //设置当前页
@@ -22,7 +22,7 @@ public class RouteServiceImpl implements RouteService {
         pageBean.setPageSize(pageSize);
 
         //get totalCount 总数据量 by cid && set
-        int totalCount = routeDao.findTotalCount(cid);
+        int totalCount = routeDao.findTotalCount(cid,rname);
         pageBean.setTotalCount(totalCount);
 
         //set totalPage 总页数
@@ -30,7 +30,7 @@ public class RouteServiceImpl implements RouteService {
         pageBean.setTotalPage(totalPage);
 
         //获取当前页的数据集合
-        List<Route> list = routeDao.findByPage(cid,(currentPage - 1) * pageSize, pageSize);
+        List<Route> list = routeDao.findByPage(cid,(currentPage - 1) * pageSize, pageSize,rname);
         pageBean.setList(list);
 
         return pageBean;

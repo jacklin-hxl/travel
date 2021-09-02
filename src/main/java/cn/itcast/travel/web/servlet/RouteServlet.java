@@ -19,6 +19,7 @@ public class RouteServlet extends BaseServlet {
         String currentPageStr = req.getParameter("currentPage");
         String pageSizeStr = req.getParameter("pageSize");
         String cidStr = req.getParameter("cid");
+        String rname = req.getParameter("rname");
 
         //处理参数
         int cid = 0;//类别id
@@ -37,7 +38,7 @@ public class RouteServlet extends BaseServlet {
         }
 
         //调用service查询pagebean对象
-        PageBean<Route> pageBean = routeService.pageQuery(cid, currentPage, pageSize);
+        PageBean<Route> pageBean = routeService.pageQuery(cid, currentPage, pageSize, rname);
 
         resp.setContentType("application/json;charset=utf-8");
         writeValue(pageBean, resp);
