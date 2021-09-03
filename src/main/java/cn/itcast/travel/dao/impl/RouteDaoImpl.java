@@ -2,6 +2,7 @@ package cn.itcast.travel.dao.impl;
 
 import cn.itcast.travel.dao.RouteDao;
 import cn.itcast.travel.domain.Route;
+import cn.itcast.travel.domain.User;
 import cn.itcast.travel.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +25,7 @@ public class RouteDaoImpl implements RouteDao {
             sb.append("and cid = ? ");
             params.add(cid);
         }
-        if(rname != null && rname.length() > 0){
+        if(rname != null && rname.length() > 0 && !rname.equals("null")){
             sb.append("and rname like ? ");
             params.add("%" + rname + "%");
         }
@@ -44,7 +45,7 @@ public class RouteDaoImpl implements RouteDao {
             sb.append("and cid = ? ");
             params.add(cid);
         }
-        if(rname != null && rname.length() > 0){
+        if(rname != null && rname.length() > 0 && !rname.equals("null")){
             sb.append("and rname like ? ");
             params.add("%" + rname + "%");
         }
@@ -53,9 +54,14 @@ public class RouteDaoImpl implements RouteDao {
         params.add(pageSize);
 
         sql = sb.toString();
-        System.out.println(sql);
-        System.out.println(params.toString());
 
         return template.query(sql,new BeanPropertyRowMapper<Route>(Route.class),params.toArray());
+    }
+
+    @Override
+    public Route findOne(int cid, int rid) {
+        String sql = "select * from tab_route where cid = ? and rid = ?";
+
+        return template.queryForObject(sql,new BeanPropertyRowMapper<Route>(Route.class), cid, rid);
     }
 }

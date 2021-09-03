@@ -1,9 +1,13 @@
 package cn.itcast.travel.service.impl;
 
 import cn.itcast.travel.dao.RouteDao;
+import cn.itcast.travel.dao.RouteImgDao;
 import cn.itcast.travel.dao.impl.RouteDaoImpl;
+import cn.itcast.travel.dao.impl.RouteImgDaoImpl;
+import cn.itcast.travel.dao.impl.SellerDaoImpl;
 import cn.itcast.travel.domain.PageBean;
 import cn.itcast.travel.domain.Route;
+import cn.itcast.travel.domain.RouteImg;
 import cn.itcast.travel.service.RouteService;
 
 import java.util.List;
@@ -34,5 +38,18 @@ public class RouteServiceImpl implements RouteService {
         pageBean.setList(list);
 
         return pageBean;
+    }
+
+    @Override
+    public Route findOne(int cid, int rid) {
+        RouteImgDao routeImgDao = new RouteImgDaoImpl();
+        SellerDaoImpl sellerDao = new SellerDaoImpl();
+
+        Route route = routeDao.findOne(cid,rid);
+        route.setRouteImgList(routeImgDao.findByRid(rid));
+        route.setSeller(sellerDao.findBySid(route.getSid()));
+
+        return route;
+
     }
 }

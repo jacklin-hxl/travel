@@ -50,4 +50,24 @@ public class RouteServlet extends BaseServlet {
         writeValue(pageBean, resp);
 
     }
+
+    public void findOne(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String cidStr = req.getParameter("cid");
+        String ridStr = req.getParameter("rid");
+
+        int cid = 0;//类别id
+        if (cidStr != null && cidStr.length() > 0 && !"null".equals(cidStr)){
+            cid = Integer.parseInt(cidStr);
+        }
+
+        int rid = 0;//类别id
+        if (ridStr != null && ridStr.length() > 0 && !"null".equals(ridStr)){
+            rid = Integer.parseInt(ridStr);
+        }
+
+        Route route = routeService.findOne(cid, rid);
+
+        resp.setContentType("application/json;charset=utf-8");
+        writeValue(route,resp);
+    }
 }
