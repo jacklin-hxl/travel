@@ -17,6 +17,7 @@
             var cid = getParameter("cid");
             var rname = getParameter("rname");
             if (rname != null && rname.length > 0 ){
+
                 rname = decodeURIComponent(rname);
             }
             load(cid,null,rname);
@@ -95,7 +96,7 @@
                 for (var i = 0; i < pb.list.length; i++) {
                     var route = pb.list[i];
 
-                    var li = '<li><div class="img"><img src="'+ route.rimage+ '"alt="" style="width: 299px"></div><div class="text1"><p>' + route.rname +'</p><br/><p>' + route.routeIntroduce +'</p></div><div class="price"><p class="price_num"><span>&yen;</span><span>'+ route.price +'</span><span>起</span></p><p><a href="route_detail.html?rid=' + route.rid + '">查看详情</a></p></div></li>';
+                    var li = '<li><div class="img"><img src="'+ route.rimage+ '"alt="" style="width: 299px"></div><div class="text1"><p>' + route.rname +'</p><br/><p>' + route.routeIntroduce +'</p></div><div class="price"><p class="price_num"><span>&yen;</span><span>'+ route.price +'</span><span>起</span></p><p><a href="route_detail.html?cid=' + route.cid + '&rid=' + route.rid + '">查看详情</a></p></div></li>';
                     route_lis += li;
 
                 }
