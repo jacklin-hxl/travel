@@ -4,8 +4,11 @@
     $(function () {
         $.get("./user/find",{},function(data){
             // {uid:1,name:"lll"}
-            var msg = "欢迎回来 " + data.name;
-            $("#span_username").html(msg); 
+            if (data){
+                var msg = "欢迎回来 " + data.name;
+                $("#span_username").html(msg);
+            }
+
         });
 
         $.get("./category/findAll",{},function(data){

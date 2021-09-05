@@ -144,6 +144,7 @@ public class UserServlet extends BaseServlet{
         if (u != null && "Y".equals(u.getStatus())){
             info.setFlag(true);
             request.getSession().setAttribute("user",u);
+            System.out.println("////getUid" + u.getUid());
         }
 
         response.setContentType("application/json;charset=utf-8");

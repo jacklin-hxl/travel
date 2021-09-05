@@ -1,13 +1,15 @@
 package cn.itcast.travel.service.impl;
 
+import cn.itcast.travel.dao.FavoriteDao;
 import cn.itcast.travel.dao.RouteDao;
 import cn.itcast.travel.dao.RouteImgDao;
+import cn.itcast.travel.dao.SellerDao;
+import cn.itcast.travel.dao.impl.FavoriteDaoImpl;
 import cn.itcast.travel.dao.impl.RouteDaoImpl;
 import cn.itcast.travel.dao.impl.RouteImgDaoImpl;
 import cn.itcast.travel.dao.impl.SellerDaoImpl;
 import cn.itcast.travel.domain.PageBean;
 import cn.itcast.travel.domain.Route;
-import cn.itcast.travel.domain.RouteImg;
 import cn.itcast.travel.service.RouteService;
 
 import java.util.List;
@@ -41,13 +43,15 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public Route findOne(int cid, int rid) {
+    public Route findOne(int rid) {
         RouteImgDao routeImgDao = new RouteImgDaoImpl();
-        SellerDaoImpl sellerDao = new SellerDaoImpl();
+        SellerDao sellerDao = new SellerDaoImpl();
+        FavoriteDao favoriteDao = new FavoriteDaoImpl();
 
-        Route route = routeDao.findOne(cid,rid);
+        Route route = routeDao.findOne(rid);
         route.setRouteImgList(routeImgDao.findByRid(rid));
         route.setSeller(sellerDao.findBySid(route.getSid()));
+        route.setCount(favoriteDao.findCountByRid(rid));
 
         return route;
 

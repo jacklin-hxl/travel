@@ -41,10 +41,10 @@
                 <div class="pros_price">
                     <p  class="price"><strong>¥<span id="price"></span></strong><span>起</span></p>
                     <p class="collect">
-                        <a class="btn"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
+                        <a class="btn" id="favorite" onclick="addFavorite();"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
 
-                        <a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>
-                        <span>已收藏100次</span>
+<!--                        <a  class="btn already" disabled="disabled"><i class="glyphicon glyphicon-heart-empty"></i>点击收藏</a>-->
+                        <span>已收藏<span id="count"></span>次</span>
                     </p>
                 </div>        
             </div>
@@ -142,14 +142,16 @@
         }
     }
 
-    $(function(){
-        var cid = getParameter("cid");
+    $(function (){
+        // var cid = getParameter("cid");
         var rid = getParameter("rid");
-        $.get('route/findOne',{cid:cid,rid:rid}, function(data) {
+        $.get('route/findOne',{rid:rid}, function(data) {
             // 获取商家信息
             // <p>经营商家  ：黑马国旅</p>
             // <p>咨询电话 : 400-618-9090</p>
             // <p>地址 ： 传智播客黑马程序员</p>
+            $("#count").html(data.count);
+
             var seller = data.seller;
             $("#sname").html(seller.sname);
             $("#consphone").html(seller.consphone);
@@ -174,7 +176,36 @@
             $("#images").after(img_lis);
             $(".big_img").attr("src", routeImgList[0].bigPic)
         })
-    })
+
+        reloadFavorite();
+    });
+
+    function reloadFavorite(){
+        var rid = getParameter("rid");
+        $.get('route/isFavorite', {rid:rid}, function (flag){
+            if (flag){
+                $("#favorite").addClass("already");
+                $("#favorite").attr("disabled","disabled");
+                $("#favorite").removeAttr("onclick");
+            }
+        })
+    }
+
+    function addFavorite (){
+        var rid = getParameter("rid");
+        $.get("user/find",{},function (data){
+            if (data){
+                $.post("route/addFavorite",{rid:rid},function (data){
+                    if (data){
+                        reloadFavorite();
+                    }
+                });
+            }else{
+               alert("请先登录");
+               location.href="login.html";
+            }
+        });
+    }
 
     </script>
 </body>
